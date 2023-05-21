@@ -29,6 +29,8 @@ func (h *AuthUserHandler) Register(router *mux.Router) {
 	router.HandleFunc("/admin/users", h.CreateUser).Methods(http.MethodPost)
 	// change user first name, last name
 	router.HandleFunc("/admin/users", h.UpdateUser).Methods(http.MethodPut)
+	// user delete handler
+	router.HandleFunc("/admin/users/{email}", h.DeleteUser).Methods(http.MethodDelete)
 	// rate limit handler
 	router.HandleFunc("/admin/rate_limit", h.UpdateRateLimit).Methods(http.MethodPost)
 	// user stats handler
@@ -411,4 +413,15 @@ func (h *AuthUserHandler) GetRateLimit(w http.ResponseWriter, r *http.Request) {
 	json.NewEncoder(w).Encode(map[string]int32{
 		"rate": rate,
 	})
+}
+
+func (h *AuthUserHandler) DeleteUser(w http.ResponseWriter, r *http.Request) {
+	email := mux.Vars(r)["email"]
+	err := h.service.q.DeleteUser(r.Context(), email)
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
+
+	w.WriteHeader(http.StatusOK)
 }

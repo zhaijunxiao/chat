@@ -23,3 +23,15 @@ func (q *Queries) GetRateLimit(ctx context.Context, userID int32) (int32, error)
 	err := row.Scan(&rate_limit)
 	return rate_limit, err
 }
+
+const deleteUser = `-- name: DeleteUser :one
+DELETE FROM auth_user
+WHERE username = $1
+RETURNING id
+`
+
+// DeleteUser deletes a user from the auth_user table.
+func (q *Queries) DeleteUser(ctx context.Context, email string) error {
+	_, err := q.db.ExecContext(ctx, deleteUser, email)
+	return err
+}
