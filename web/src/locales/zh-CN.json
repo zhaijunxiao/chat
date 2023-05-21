@@ -129,7 +129,10 @@
       "actions": "操作"
     },
     "model_one_default_only": "只能有一个默认模型, 请先设置其他模型为非默认",
-    "rateLimit10Min": "消息数量上限(10分钟)"
+    "rateLimit10Min": "消息数量上限(10分钟)",
+    "deleteUser": "删除用户",
+    "delete": "删除",
+    "deleteSuccess": "刪除用戶成功"
   },
   "setting": {
     "setting": "设置",

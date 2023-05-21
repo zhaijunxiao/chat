@@ -38,3 +38,14 @@ export const updateUserFullName = async (data: any): Promise<any> => {
     throw error
   }
 }
+
+export const deleteUser = async (email: string): Promise<any> => {
+  try {
+    const response = await request.delete(`/admin/users/${email}`)
+    return response.data
+  }
+  catch (error) {
+    console.error(error)
+    throw error
+  }
+}
